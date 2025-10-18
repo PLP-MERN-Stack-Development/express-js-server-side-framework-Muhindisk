@@ -4,6 +4,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const cors = require('cors');
 
 dotenv.config();
 
@@ -12,6 +13,11 @@ const app = express();
 
 // Middleware setup
 app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:5173", // Adjust according to your frontend port
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 // Connect to MongoDB
 connectDB();
@@ -31,17 +37,4 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-// TODO: Implement the following routes:
-// GET /api/products - Get all products
-// GET /api/products/:id - Get a specific product
-// POST /api/products - Create a new product
-// PUT /api/products/:id - Update a product
-// DELETE /api/products/:id - Delete a product
-
-// TODO: Implement custom middleware for:
-// - Request logging
-// - Authentication
-// - Error handling
-
-// Export the app for testing purposes
 module.exports = app; 
